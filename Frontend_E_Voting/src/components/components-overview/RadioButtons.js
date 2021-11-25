@@ -1,0 +1,19 @@
+import React from "react";
+import { Col, FormRadio } from "shards-react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
+const RadioButtons = () => (
+  <Col sm="12" md="4" className="mb-3">
+    <strong className="text-muted d-block mb-2">Radio Buttons</strong>
+    <fieldset>
+      <FormRadio>Default</FormRadio>
+      <FormRadio defaultChecked>Checked</FormRadio>
+      <FormRadio disabled>Disabled</FormRadio>
+      <FormRadio disabled defaultChecked>
+        Disabled Checked
+      </FormRadio>
+    </fieldset>
+  </Col>
+);
+
+export default RadioButtons;

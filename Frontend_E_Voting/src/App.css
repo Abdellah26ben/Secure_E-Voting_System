@@ -4,13 +4,14 @@
   box-sizing: border-box;
 }
 body {
-  background: url(./images/img.png);
-  background-size: 1800px;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
   font-family: "Fira Sans", sans-serif;
-  
+}
+.App {
+  background: url(./images/img.png);
+  background-size: 1800px;
 }
 
 h1,
