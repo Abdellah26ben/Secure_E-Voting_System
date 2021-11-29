@@ -20,7 +20,6 @@ class GetAllElectionAPI(APIView):
         return Response(data)
 
 class GetElectionPosition(generics.RetrieveAPIView):
-
     serializer_class = PositionSerializer
 
     def get(self, request,election_id):
@@ -28,3 +27,12 @@ class GetElectionPosition(generics.RetrieveAPIView):
         data = serializers.serialize('json', queryset)
         return HttpResponse(data, content_type="application/json")
 
+class GetPositionCandidates(generics.RetrieveAPIView):
+    serializer_class = Candidates
+
+    def get(self,request,election_id,position_id):
+        print("----------------")
+        queryset = Candidates.objects.filter(election_name__election_generated_id=election_id , election_position__election_position_id=position_id)
+        data = serializers.serialize('json', queryset)
+
+        return HttpResponse(data, content_type="application/json")

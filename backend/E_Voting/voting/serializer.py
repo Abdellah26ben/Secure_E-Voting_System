@@ -1,4 +1,4 @@
-from .models import Election, Positions
+from .models import Election, Positions, Candidates
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 
@@ -14,3 +14,9 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Positions
         fields = ('election_position_name','election_position_id','position_election')
+
+# Candidates Serializer
+class CandidateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidates
+        fields = ('election_candidate_id','election_candidate_name','election_name','election_position')
