@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 from random import randint
 from knox.models import AuthToken
 from .models import Election,Positions,Candidates,Votes
-from .serializer import ElectionSerializer,PositionSerializer
+from .serializer import ElectionSerializer,PositionSerializer, VoteSerializer
 from django.core import serializers
 
 # Get Available Elections API
@@ -36,3 +36,13 @@ class GetPositionCandidates(generics.RetrieveAPIView):
         data = serializers.serialize('json', queryset)
 
         return HttpResponse(data, content_type="application/json")
+class PostVote(generics.CreateAPIView):
+    serializer_class = VoteSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data,voter=request.user)
+        serializer.is_valid(raise_exception=True)
+        vote = serializer.save()
+        return Response({
+            "Vote": VoteSerializer(vote,context=self.get_serializer_context()).data,
+        })

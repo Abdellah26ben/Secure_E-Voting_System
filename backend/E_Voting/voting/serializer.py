@@ -1,4 +1,4 @@
-from .models import Election, Positions, Candidates
+from .models import Election, Positions, Candidates, Votes
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 
@@ -20,3 +20,9 @@ class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidates
         fields = ('election_candidate_id','election_candidate_name','election_name','election_position')
+
+# Voter Serializer
+class VoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Votes
+        fields = '__all__'

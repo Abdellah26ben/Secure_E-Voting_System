@@ -1,6 +1,10 @@
-from django.db import models
 
 import uuid
+
+from django.db import models
+from django.conf import settings
+
+
 
 # Create your models here.
 class Election(models.Model):
@@ -26,3 +30,5 @@ class Votes(models.Model):
     election = models.ForeignKey(Election, on_delete=models.CASCADE)
     election_candidate = models.ForeignKey(Candidates,on_delete=models.CASCADE)
     election_position = models.ForeignKey(Positions,on_delete=models.CASCADE)
+    voter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
