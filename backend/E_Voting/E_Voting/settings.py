@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'E_Voting',
+    'voting',
     'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
