@@ -19,7 +19,7 @@ function Registre() {
     const styleRed = {color : 'red'};
     useEffect(() => {
         if (localStorage.getItem('token') !== null) {
-          window.location.replace('http://localhost:3000/dashboard');
+          window.location.replace('http://localhost:3000/voter_dashboard');
         } else {
           setLoading(false);
         }
@@ -50,7 +50,7 @@ function Registre() {
                 localStorage.clear();
                 localStorage.setItem('token', data.token);
                 localStorage.setItem("user",JSON.stringify(data.user));
-                window.location.replace('http://localhost:3000/dashboard');
+                window.location.replace('http://localhost:3000/voter_dashboard');
                 } else {
                     setUsername('');
                     setFirstName('');

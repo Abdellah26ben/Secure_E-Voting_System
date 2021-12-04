@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Navbar, NavbarBrand } from "shards-react";
 
-import { Dispatcher, Constants } from "../../../flux";
+import { Dispatcher, Constants } from "../../../flux_admin";
 
 class SidebarMainNavbar extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class SidebarMainNavbar extends React.Component {
               />
               {!hideLogoText && (
                 <span className="d-none d-md-inline ml-1">
-                     Welcome Voter
+                     Welcome Admin
                 </span>
               )}
             </div>

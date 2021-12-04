@@ -7,6 +7,7 @@ import Nav from './components/nav.component';
 import Login from './components/login.component';
 import Registre from './components/registre.component';
 import Dashboard from './components/dashboard.component';
+import AdminDashboard from './components/admin_dashboard.component';
 import {BrowserRouter   ,Switch  , Route, Redirect} from "react-router-dom";
 import routes from "./routes";
 import withTracker from "./withTracker";
@@ -26,7 +27,10 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route  exact path='/login' component={Login} />
         <Route exact path='/registre' component={Registre} />
-        <Route exact path='/dashboard' component={Dashboard}  />
+        <Route exact path='/voter_dashboard' component={Dashboard}
+          />
+          <Route exact path='/admin_dashboard' component={AdminDashboard}
+          />
         </Switch>
         
       

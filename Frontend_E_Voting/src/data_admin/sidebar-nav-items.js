@@ -4,7 +4,7 @@ export default function() {
   return [
 
     {
-      title: "Vote here ",
+      title: "List of Elections ",
       htmlBefore: '<i class="material-icons"></i>',
       to: "/list-of-elections",
       

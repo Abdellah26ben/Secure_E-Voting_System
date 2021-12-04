@@ -12,7 +12,7 @@ import {useHistory} from 'react-router-dom'
         const styleRed = {color : 'red'};
         useEffect(() => {
             if (localStorage.getItem('token')) {
-              history.push("/dashboard")
+              history.push("/voter_dashboard")
             } else {
               setLoading(false);
             }
@@ -44,7 +44,15 @@ import {useHistory} from 'react-router-dom'
             localStorage.clear();
             localStorage.setItem("token",JSON.stringify(result.token));
             localStorage.setItem("user",JSON.stringify(result.user));
-            history.push("/dashboard");
+            
+            if((result.user['is_superuser']))
+             {
+              history.push("/admin_dashboard");
+             }
+             else {
+              history.push("/voter_dashboard");
+             }
+            
           }
            
            
