@@ -56,7 +56,7 @@ const Logout = () => {
           
             <NavDropdown title = {currentUser}>
             
-            <NavDropdown.Item><input type='button'  className='button' value='Logout' onClick={handleLogout} /></NavDropdown.Item>
+            <NavDropdown.Item><input type='button'  className='btn btn-primary btn-block' value='Logout' onClick={handleLogout} /></NavDropdown.Item>
             </NavDropdown>
           
       </NavItem>

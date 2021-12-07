@@ -27,13 +27,70 @@ const cardSelect = {
   
 };
 
-export default function App() {
-  const [selected, setSelected] = React.useState(0);
-
- 
-
-    return (
+class App extends React.Component {
+  // Constructor 
+  constructor(props) {
+      super(props);
       
+      this.state = {
+          items: [],
+          DataisLoaded: false,
+          showing:false,
+          title:"Vote Here"
+      };
+  }
+ 
+  // ComponentDidMount is used to
+  // execute the code 
+  
+  componentDidMount() {
+
+    let CurrentElection = JSON.parse(localStorage.getItem('currentElection'));
+    let CurrentPosition = JSON.parse(localStorage.getItem('currentPosition'));
+    console.log(CurrentElection)
+    console.log(CurrentPosition)
+
+
+      fetch(
+"http://127.0.0.1:8000/api/auth/candidates/"+CurrentElection+"/"+CurrentPosition)
+          .then((res) => res.json())
+          .then((json) => {
+              this.setState({
+                  items: json,
+                  DataisLoaded: true
+              });
+          })
+  }
+
+  handleInput = (e) => {
+    
+    let CurrentVoter = e.target.value;
+    localStorage.setItem("currentVoter",JSON.stringify(CurrentVoter));
+    let CurrentPosition = JSON.parse(localStorage.getItem('currentPosition'));
+    console.log(CurrentVoter)
+    console.log(CurrentPosition)
+
+}   
+
+SubmitVote = () => {
+    
+  let CurrentVoter = JSON.parse(localStorage.getItem('currentVoter'));
+  let CurrentPosition = JSON.parse(localStorage.getItem('currentPosition'));
+  this.setState({ title: "Voted !" });
+  console.log(CurrentVoter)
+  console.log(CurrentPosition)
+
+} 
+
+
+  render() {
+    const { DataisLoaded, items } = this.state;
+    const { showing } = this.state;
+    
+    if (!DataisLoaded) return <div>
+        <h1> Pleses wait some time.... </h1> </div> ;
+    return (
+
       
       <div class="row">
       <div class="col">
@@ -45,52 +102,38 @@ export default function App() {
             <table class="table table-dark mb-0">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col" class="border-bottom-0">#</th>
-                  <th scope="col" class="border-bottom-0">First Name</th>
-                  <th scope="col" class="border-bottom-0">Last Name</th>
-                  <th scope="col" class="border-bottom-0">Country</th>
-                  <th scope="col" class="border-bottom-0">City</th>
+                  
+                  <th scope="col" class="border-bottom-0">Candidate Name</th>
                   <th scope="col" class="border-bottom-0">Vote!</th>
                 </tr>
               </thead>
               <tbody>
+
+              {
+                items.map((item) => ( 
                 <tr>
-                  <td>1</td>
-                  <td>Graham</td>
-                  <td>Brent</td>
-                  <td>Benin</td>
-                  <td>Ripabottoni</td>
-                  <td><input class='myclass' type='button' value='Vote here'/></td>
+                  
+                  <td>{item['fields'].election_candidate_name}</td>
+                 
+                  <td><input type="radio" name="myGroupName"onClick={e => this.handleInput(e, "value")} value = {item['fields'].election_candidate_name}>{this.props.myValue}</input>
+</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Clark</td>
-                  <td>Angela</td>
-                  <td>Estonia</td>
-                  <td>Borghetto di Vara</td>
-                  <td><input class='myclass' type='button' value='Vote here'/></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Wylie</td>
-                  <td>Joseph</td>
-                  <td>Korea, North</td>
-                  <td>Guelph</td>
-                  <td><input class='myclass' type='button' value='Vote here'/></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Garth</td>
-                  <td>Clementine</td>
-                  <td>Indonesia</td>
-                  <td>Narcao</td>
-                  <td><input class='myclass' type='button' value='Vote here'/></td>
-                </tr>
+                  
+                  ))
+                }
+
+
+    
               </tbody>
             </table>
           </div>
+          <button type='button' onClick={e => this.SubmitVote()}   className="btn btn-primary btn-block">{this.state.title}</button>
+
         </div>
+
       </div>
     </div>
     );
   }
+}
+export default App

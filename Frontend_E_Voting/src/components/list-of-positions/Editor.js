@@ -1,4 +1,5 @@
-import React from "react";
+import React,{ Component, useState, useEffect } from "react";
+import { withRouter } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -27,13 +28,50 @@ const cardSelect = {
   
 };
 
-export default function App() {
-  const [selected, setSelected] = React.useState(0);
-
- 
-
-    return (
+class Child extends React.Component {
+  
+  // Constructor 
+  constructor(props) {
+      super(props);
       
+      this.state = {
+          items: [],
+          DataisLoaded: false,
+          showing:false
+      };
+  }
+ 
+ 
+  componentDidMount() {
+
+    let CurrentElection = JSON.parse(localStorage.getItem('currentElection'));
+    console.warn(CurrentElection);
+
+      fetch(
+"http://127.0.0.1:8000/api/auth/positions/"+CurrentElection)
+          .then((res) => res.json())
+          .then((json) => {
+              this.setState({
+                  items: json,
+                  DataisLoaded: true
+              });
+          })
+  }
+
+  handleInput = (e) => {
+    
+    console.log(e.target.value);
+    localStorage.setItem("currentPosition",JSON.stringify(e.target.value));
+    this.props.history.push("/list-of-candidates");
+}    
+  render() {
+    const { DataisLoaded, items } = this.state;
+    
+    if (!DataisLoaded) return <div>
+        <h1> Pleses wait some time.... </h1> </div> ;
+    return (
+  
+  
       
     <Row>
     <Col>
@@ -46,7 +84,7 @@ export default function App() {
             <thead className="bg-light">
               <tr>
                 <th scope="col" className="border-0">
-                  #
+                  
                 </th>
                 <th scope="col" className="border-0">
                   Name of Positions
@@ -60,36 +98,44 @@ export default function App() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>President</td>
+
+
+              {
+                items.map((item) => ( 
+                
+                    
+          
+                  <tr>
+                <td></td>
+                <td>{item['fields'].election_position_name}</td>
                 <td>10</td>
-                <td><Link to="/list-of-candidates" className="btn btn-primary">Check here</Link></td>
+                <td><button type='button' onClick={e => this.handleInput(e, "value")} value = {item.pk}  className="btn btn-primary btn-block">Check here</button>
+</td>
+                
+               
               
               </tr>
-              <tr>
-                <td>2</td>
-                <td>Vice President</td>
-                <td>15</td>
-                <td><Link to="/list-of-candidates" className="btn btn-primary">Check here</Link></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Asistant</td>
-                <td>12</td>
-                <td><Link to="/list-of-candidates" className="btn btn-primary">Check here</Link></td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Recuriter</td>
-                <td>16</td>
-                <td><Link to="/list-of-candidates" className="btn btn-primary">Check here</Link></td>
-              </tr>
+      
+    
+
+                     
+                   
+                ))
+            }
+
+
+
+              
+             
             </tbody>
           </table>
         </CardBody>
       </Card>
     </Col>
   </Row>
-    );
-  }
+     );
+    }
+    
+}
+
+    export default withRouter(Child)
